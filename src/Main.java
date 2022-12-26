@@ -10,6 +10,8 @@ public class Main {
             monthlyReport[i] = new MonthlyReport();
         }
         YearlyReport yearlyReport = new YearlyReport();
+        int a = 0;
+        int b = 0;
 
         printMenu();
 
@@ -19,21 +21,25 @@ public class Main {
                 for (int i = 0; i < monthlyReport.length; i++) {
                     monthlyReport[i].reader("resources/m.20210" + (i + 1) + ".csv");
                 }
+                a = 1;
                 System.out.println("Месячные отчёты считаны" + '\n');
             } else if (userInput == 2) {
                 yearlyReport.reader("resources/y.2021.csv");
                 System.out.println("Годовой отчет считан" + '\n');
+                b = 1;
             } else if (userInput == 3) {
-                for (int i = 0; i < monthlyReport.length; i++) {
-                    if (yearlyReport.yearlyData.isEmpty() && monthlyReport[i].monthlyData.isEmpty()) {
-                        System.out.println("Невозможно провести сверку, отчёты не считаны");
-                    } else if (yearlyReport.sumAllMonthProfit(i) != monthlyReport[i].sumAllProfit()) {
-                        System.out.println("Доходы не совпадают в" + (i + 1) + " месяце");
-                    } else if (yearlyReport.sumAllMonthExpenses(i) != monthlyReport[i].sumAllExpenses()) {
-                        System.out.println("Расходы не совпадают в" + (i + 1) + " месяце");
+                if ((a != 1 && b != 1) || (a == 1 && b != 1) || (a != 1 && b == 1)) { /*Тут тоже вроде бы теперь ошибка не падает*/
+                    System.out.println("Невозможно провести сверку, отчёты не считаны"  + '\n');
+                } else if (a == 1 && b == 1) {
+                    for (int i = 0; i < monthlyReport.length; i++) {
+                        if (yearlyReport.sumAllMonthProfit(i) != monthlyReport[i].sumAllProfit()) {
+                            System.out.println("Доходы не совпадают в " + (i + 1) + " месяце");
+                        } else if (yearlyReport.sumAllMonthExpenses(i) != monthlyReport[i].sumAllExpenses()) {
+                            System.out.println("Расходы не совпадают в " + (i + 1) + " месяце");
+                        }
                     }
+                    System.out.println("Сверка завершена, ошибок не обнаружено" + '\n');
                 }
-                System.out.println("Сверка завершена, ошибок не обнаружено" + '\n');
             } else if (userInput == 4) {
                 for (int i = 0; i < monthlyReport.length; i++) {
                     if (monthlyReport[i].monthlyData.isEmpty()) {

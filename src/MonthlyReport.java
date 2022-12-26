@@ -14,6 +14,9 @@ public class MonthlyReport {
     /*Метод для считывания данных из файлов и их распределения по прибыли и расходам*/
     void reader (String path) {
         String content = readFileContents(path);
+        if (content == null) { /*Как я понял так нужно сделать?*/
+            return;
+        }
         String[] lines = content.split("\r?\n");
         for (int i = 1; i < lines.length; i++) {
             String line = lines[i];
